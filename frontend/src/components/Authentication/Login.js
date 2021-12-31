@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
@@ -53,7 +53,9 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
+
       localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log(data);
       setLoading(false);
       history.push("/chats");
     } catch (error) {
@@ -69,6 +71,12 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("userInfo")) {
+      history.push("/chats");
+    }
+  }, [history]);
 
   return (
     <VStack spacing="10px">
@@ -106,17 +114,7 @@ const Login = () => {
       >
         Login
       </Button>
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials
-      </Button>
+    
     </VStack>
   );
 };

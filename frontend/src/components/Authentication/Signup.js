@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 const Signup = () => {
@@ -128,6 +128,11 @@ const Signup = () => {
       return;
     }
   };
+  useEffect(() => {
+    if (localStorage.getItem("userInfo")) {
+      history.push("/chats");
+    }
+  }, [history]);
 
   return (
     <VStack spacing="5px">
